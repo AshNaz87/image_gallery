@@ -4,17 +4,29 @@
 
 function activateGallery() {
   let thumbnails = document.querySelector("#gallery-thumbs > div > img");
-
   let mainImage = document.querySelector("#gallery-photo > img");
 
   thumbnails.forEach(thumbnail => {
+    let newImgSrc = thumbnail.dataset.largeVersion;
+    let largeVersion = new Image();
+    largeVersion.src = newImgSrc;
+
+    let newImgAlt = thumbnail.alt;
+    mainImage.setAttribute("src", newImgSrc);
+    mainImage.setAttribute("alt", newImgAlt);
+
     thumbnail.addEventListener("click", function() {
-      let newImgSrc = thumbnail.dataset.largeVersion;
-      let newImgAlt = thumbnail.alt;
-      mainImage.setAttribute("src", newImgSrc);
-      mainImage.setAttribute("alt", newImgAlt);
+      let currentClass = "current";
+      document.querySelector(".current").classList.remove(currentClass);
+      thumbnail.parentNode.classList.add(currentClass);
+
+
+      let galleryInfo = document.querySelector("#gallery-info");
+      let title = galleryInfo.querySelector(".title");
+      let description = galleryInfo.querySelector(".description");
+
+      title.innerHTML = thumbnail.dataset.title;
+      description.innerHTML = thumbnail.dataset.description;
     });
   });
 }
-
-// mainImage.setAttribute("src", newImageSrc);
